@@ -4,9 +4,9 @@ const { Pool } = require('pg');
 
 const pool = new Pool({
   user: 'Vagrant',
-  password: '123',
+  password: 'password',
   host: 'localhost',
-  database: 'bootcampx'
+  database: 'lightbnb'
 });
 
 /// Users

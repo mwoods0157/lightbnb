@@ -3,8 +3,8 @@ const users = require('./json/users.json');
 const { Pool } = require('pg');
 
 const pool = new Pool({
-  user: 'Vagrant',
-  password: 'password',
+  user: 'vagrant',
+  password: '123',
   host: 'localhost',
   database: 'lightbnb'
 });
@@ -123,31 +123,31 @@ const getAllProperties = function(options, limit = 10) {
   if (options.owner_id) {
     queryParams.push(`%${options.owner_id}%`);
     createTag();
-    queryString += `owner_id = ${owner_id}`;
+    queryString += `owner_id = ${queryParams.length}`;
   }
 
   if (options.minimum_price_per_night) {
     queryParams.push(`%${options.minimum_price_per_night}%`);
     createTag();
-    queryString += `cost_per_night > ${minimum_price_per_night}`;
+    queryString += `cost_per_night > ${queryParams.length}`;
   }
 
   if (options.maximum_price_per_night) {
     queryParams.push(`%${options.maximum_price_per_night}%`);
     createTag();
-    queryString += `cost_per_night < ${maximum_price_per_night}`;
+    queryString += `cost_per_night < ${queryParams.length}`;
   }
 
   if (options.minimum_rating) {
     queryParams.push(`%${options.minimum_rating}`);
     createTag();
-    queryString += 'propery_reviews.rating > minimum_rating';
+    queryString += `propery_reviews.rating > ${queryParams.length}`;
   }
   
   const createTag = function() {
-    if (queryParams.length > 0) {
+    if (queryParams.length > 1) {
       queryString += ' AND ';
-    } else {
+    } else if (queryParams.length === 1){
       queryString += ' WHERE ';
     }
   }
